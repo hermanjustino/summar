@@ -1,0 +1,22 @@
+/* 
+  Project: Personal Content Management and Social Media Suggestion App
+  Description: A web application that allows users to upload various media types, input their opinions, and receive AI-generated social media post suggestions tailored for platforms like LinkedIn, Substack, TikTok, and Instagram.
+  Features:
+  - Media upload and content fetching from URLs
+  - User input for personal insights on consumed media
+  - AI-generated content suggestions for multiple social media platforms
+  - User authentication and profile customization
+  - Responsive and intuitive UI/UX design
+  - Integration with external APIs for content retrieval and AI processing
+  Technologies:
+  - Frontend: React.js, Tailwind CSS
+  - Backend: Node.js, Express.js
+  - Database: MongoDB
+  - AI Integration: OpenAI GPT API
+  - Authentication: JSON Web Tokens (JWT)
+  - Deployment: Vercel (Frontend), Heroku (Backend)
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

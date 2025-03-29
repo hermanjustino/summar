@@ -20,6 +20,9 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', database: 'connected' });
 });
 
+// Auth routes
+app.use('/api/auth', require('./routes/auth'));
+
 // Content routes placeholder
 app.get('/api/content', (req, res) => {
   // Will connect to MongoDB later
@@ -39,7 +42,7 @@ app.post('/api/generate', (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Try to start server with better error handling
 const startServer = async () => {

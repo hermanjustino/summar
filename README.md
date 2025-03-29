@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+# Summar - Personal Content Management & Social Media Assistant
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Summar is an AI-powered application that helps users transform their media consumption into engaging social media content. Upload any content you've consumed, add your thoughts, and let our AI suggest tailored content for various social platforms.
+
+## Project Overview
+
+In today's content-saturated world, sharing meaningful perspectives on the media we consume can be challenging. Summar bridges this gap by helping you:
+
+1. Organize content you've consumed (articles, podcasts, videos, etc.)
+2. Record your personal insights and opinions
+3. Generate platform-specific social media posts that reflect your authentic voice
+
+## Key Features
+
+- **Content Import**: Upload files or fetch content via URLs/Spotify links
+- **Personal Insights**: Document your thoughts and reactions to consumed content
+- **AI-Generated Suggestions**: Receive tailored post suggestions for:
+  - LinkedIn
+  - Substack
+  - TikTok
+  - Instagram
+  - Twitter/X
+- **Content Library**: Maintain a searchable archive of your media consumption
+- **User Authentication**: Secure user profiles and content
+- **Responsive Design**: Seamless experience across all devices
+
+## Technology Stack
+
+### Frontend
+- React.js with hooks and context API
+- Tailwind CSS for styling
+- React Router for navigation
+- Formik & Yup for form handling
+
+### Backend
+- Node.js with Express
+- MongoDB for database
+- OpenAI GPT API for content generation
+- JWT for authentication
+
+### Deployment
+- Frontend: Vercel
+- Backend: Heroku
+- Database: MongoDB Atlas
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v14 or later)
+- npm or yarn
+- MongoDB (local or Atlas connection)
+- OpenAI API key
+
+### Installation
+
+1. Clone the repository
+   ```
+   git clone https://github.com/yourusername/summar.git
+   cd summar
+   ```
+
+2. Install dependencies
+   ```
+   npm install
+   ```
+
+3. Create a `.env` file in the project root with the following:
+   ```
+   REACT_APP_API_URL=http://localhost:5000
+   OPENAI_API_KEY=your_openai_api_key
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   ```
+
+4. Start the development server
+   ```
+   npm start
+   ```
+   
+5. For backend development (in a separate terminal):
+   ```
+   cd server
+   npm install
+   npm run dev
+   ```
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+- `npm start`: Runs the app in development mode
+- `npm test`: Launches the test runner
+- `npm build`: Builds the app for production
+- `npm eject`: Ejects from create-react-app (one-way operation)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Contributing
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### `npm test`
+## License
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### `npm run build`
+## Acknowledgments
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- OpenAI for their powerful language models
+- Create React App for the project setup
+- All contributors and supporters of this project

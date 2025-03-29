@@ -1,0 +1,64 @@
+ERROR
+Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: object. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+Check the render method of `AppContent`.
+createFiberFromTypeAndProps@http://localhost:3000/static/js/bundle.js:33128:30
+createFiberFromElement@http://localhost:3000/static/js/bundle.js:33149:46
+reconcileSingleElement@http://localhost:3000/static/js/bundle.js:22248:49
+reconcileChildFibers@http://localhost:3000/static/js/bundle.js:22298:61
+reconcileChildren@http://localhost:3000/static/js/bundle.js:25237:48
+mountIndeterminateComponent@http://localhost:3000/static/js/bundle.js:26074:26
+callCallback@http://localhost:3000/static/js/bundle.js:12318:23
+dispatchEvent@[native code]
+invokeGuardedCallbackDev@http://localhost:3000/static/js/bundle.js:12362:33
+invokeGuardedCallback@http://localhost:3000/static/js/bundle.js:12419:40
+beginWork$1@http://localhost:3000/static/js/bundle.js:32283:32
+performUnitOfWork@http://localhost:3000/static/js/bundle.js:31531:27
+workLoopConcurrent@http://localhost:3000/static/js/bundle.js:31519:26
+renderRootConcurrent@http://localhost:3000/static/js/bundle.js:31487:29
+performConcurrentWorkOnRoot@http://localhost:3000/static/js/bundle.js:30822:62
+workLoop@http://localhost:3000/static/js/bundle.js:48680:46
+flushWork@http://localhost:3000/static/js/bundle.js:48658:26
+performWorkUntilDeadline@http://localhost:3000/static/js/bundle.js:48895:46
+ERROR
+Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: object. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+Check the render method of `AppContent`.
+createFiberFromTypeAndProps@http://localhost:3000/static/js/bundle.js:33128:30
+createFiberFromElement@http://localhost:3000/static/js/bundle.js:33149:46
+reconcileSingleElement@http://localhost:3000/static/js/bundle.js:22248:49
+reconcileChildFibers@http://localhost:3000/static/js/bundle.js:22298:61
+reconcileChildren@http://localhost:3000/static/js/bundle.js:25237:48
+mountIndeterminateComponent@http://localhost:3000/static/js/bundle.js:26074:26
+callCallback@http://localhost:3000/static/js/bundle.js:12318:23
+dispatchEvent@[native code]
+invokeGuardedCallbackDev@http://localhost:3000/static/js/bundle.js:12362:33
+invokeGuardedCallback@http://localhost:3000/static/js/bundle.js:12419:40
+beginWork$1@http://localhost:3000/static/js/bundle.js:32283:32
+performUnitOfWork@http://localhost:3000/static/js/bundle.js:31531:27
+workLoopSync@http://localhost:3000/static/js/bundle.js:31454:26
+renderRootSync@http://localhost:3000/static/js/bundle.js:31427:23
+recoverFromConcurrentError@http://localhost:3000/static/js/bundle.js:30919:38
+performConcurrentWorkOnRoot@http://localhost:3000/static/js/bundle.js:30832:52
+workLoop@http://localhost:3000/static/js/bundle.js:48680:46
+flushWork@http://localhost:3000/static/js/bundle.js:48658:26
+performWorkUntilDeadline@http://localhost:3000/static/js/bundle.js:48895:46
+ERROR
+Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: object. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+Check the render method of `AppContent`.
+createFiberFromTypeAndProps@http://localhost:3000/static/js/bundle.js:33128:30
+createFiberFromElement@http://localhost:3000/static/js/bundle.js:33149:46
+reconcileSingleElement@http://localhost:3000/static/js/bundle.js:22248:49
+reconcileChildFibers@http://localhost:3000/static/js/bundle.js:22298:61
+reconcileChildren@http://localhost:3000/static/js/bundle.js:25237:48
+mountIndeterminateComponent@http://localhost:3000/static/js/bundle.js:26074:26
+beginWork$1@http://localhost:3000/static/js/bundle.js:32261:27
+performUnitOfWork@http://localhost:3000/static/js/bundle.js:31531:27
+workLoopSync@http://localhost:3000/static/js/bundle.js:31454:26
+renderRootSync@http://localhost:3000/static/js/bundle.js:31427:23
+recoverFromConcurrentError@http://localhost:3000/static/js/bundle.js:30919:38
+performConcurrentWorkOnRoot@http://localhost:3000/static/js/bundle.js:30832:52
+workLoop@http://localhost:3000/static/js/bundle.js:48680:46
+flushWork@http://localhost:3000/static/js/bundle.js:48658:26
+performWorkUntilDeadline@http://localhost:3000/static/js/bundle.js:48895:46

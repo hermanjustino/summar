@@ -28,4 +28,7 @@ chat_gpt.md
 
 .env
 /server/.env
-.env
+
+/server/node_modules
+
+chat_gpt.md

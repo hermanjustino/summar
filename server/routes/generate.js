@@ -22,6 +22,8 @@ router.post('/', auth, async (req, res) => {
       return res.status(500).json({ message: 'API key not configured' });
     }
     
+    console.log(`Processing generation request: ${contentType} - "${prompt.substring(0, 30)}..."`);
+    
     const genAI = new GoogleGenerativeAI(API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
     
@@ -31,6 +33,10 @@ router.post('/', auth, async (req, res) => {
       generationPrompt = `Please summarize the following text in a concise but comprehensive manner:\n\n${prompt}`;
     } else if (contentType === 'social') {
       generationPrompt = `Generate engaging social media posts based on this content:\n\n${prompt}\n\nProvide one post each for Twitter, LinkedIn, and Instagram.`;
+    } else if (contentType === 'blog') {
+      generationPrompt = `Generate a blog post outline based on this topic:\n\n${prompt}`;
+    } else if (contentType === 'email') {
+      generationPrompt = `Write a professional email based on this prompt:\n\n${prompt}`;
     } else {
       generationPrompt = prompt;
     }
@@ -39,6 +45,8 @@ router.post('/', auth, async (req, res) => {
     console.log(`Generating ${contentType} content with prompt: ${prompt.substring(0, 50)}...`);
     const result = await model.generateContent(generationPrompt);
     const generatedText = result.response.text();
+    
+    console.log(`Successfully generated content (${generatedText.length} chars)`);
     
     res.json({
       message: 'Content generated successfully',

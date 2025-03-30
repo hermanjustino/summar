@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useContent } from '../context/ContentContext';
 
 const Library = () => {
-  const { content, isLoading } = useContent();
+  const { content, isLoading, refreshContent } = useContent();
+
+  // Refresh content when component mounts
+  useEffect(() => {
+    refreshContent();
+  }, []);
 
   // Helper function to safely format dates
   const formatDate = (dateString) => {
@@ -26,7 +31,15 @@ const Library = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Content Library</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Content Library</h1>
+        <button 
+          onClick={refreshContent}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
+          Refresh
+        </button>
+      </div>
       
       {content.length === 0 ? (
         <div className="bg-white rounded-lg shadow p-6 text-center">
@@ -43,32 +56,35 @@ const Library = () => {
                   {formatDate(item.createdAt)}
                 </p>
                 
-                {item.description && (
-                  <p className="text-gray-600 mb-4 line-clamp-3">{item.description}</p>
+                <div className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded inline-block mb-3">
+                  {item.contentType || 'general'}
+                </div>
+                
+                {item.originalContent && (
+                  <div className="mb-3">
+                    <p className="text-sm text-gray-700 font-medium">Original:</p>
+                    <p className="text-gray-600 text-sm line-clamp-2">{item.originalContent}</p>
+                  </div>
+                )}
+                
+                {item.generatedContent && (
+                  <div className="mb-3">
+                    <p className="text-sm text-gray-700 font-medium">Generated:</p>
+                    <p className="text-gray-600 text-sm line-clamp-3">{item.generatedContent}</p>
+                  </div>
                 )}
                 
                 {item.tags && item.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2 mt-3">
                     {item.tags.map((tag, idx) => (
                       <span 
                         key={idx} 
-                        className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
+                        className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
-                )}
-                
-                {item.url && (
-                  <a 
-                    href={item.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 text-sm"
-                  >
-                    View original content
-                  </a>
                 )}
               </div>
             </div>

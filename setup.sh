@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Navigate to project root
-cd /Users/hermanjustino/Documents/projects/summar
+cd /summar
 
 # Create component directories
 mkdir -p src/components/auth

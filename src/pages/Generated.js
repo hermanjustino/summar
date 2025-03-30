@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ContentGenerator from '../components/content/ContentGenerator';
 import ContentList from '../components/content/ContentList';
 import { useContent } from '../context/ContentContext';
 
 const Generated = () => {
-  const { content, isLoading, error } = useContent();
+  const { content, isLoading, error, refreshContent } = useContent();
   
-  // Filter to only show AI-generated content
+  // Refresh content when component mounts
+  useEffect(() => {
+    refreshContent();
+  }, []);
+  
+  // Filter to only show AI-generated content - updated to use contentType instead of type
   const generatedContent = content.filter(item => 
-    item.type === 'general' || item.type === 'summary' || 
-    item.type === 'social' || item.type === 'blog'
+    item.contentType === 'summary' || 
+    item.contentType === 'social' || 
+    item.contentType === 'blog' || 
+    item.contentType === 'email' || 
+    item.contentType === 'other'
   );
   
   return (

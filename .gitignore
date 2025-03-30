@@ -29,4 +29,6 @@ chat_gpt.md
 .env
 /server/.env
 
+# Log files
 console_log.txt
+/server/server_log.txt

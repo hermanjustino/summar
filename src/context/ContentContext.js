@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
 import { getToken } from '../services/storage';
+import * as contentService from '../services/content';
 
 const ContentContext = createContext();
 
@@ -29,9 +30,13 @@ export const ContentProvider = ({ children }) => {
     try {
       const currentToken = token || getToken(); // Get token from context or storage as backup
       
+      console.log('Fetching content with token:', currentToken ? 'Token exists' : 'No token');
+      
       const response = await axios.get(`${API_URL}/content`, {
         headers: { Authorization: `Bearer ${currentToken}` }
       });
+      
+      console.log('Fetched content:', response.data);
       setContent(response.data);
     } catch (err) {
       console.error('Error fetching content:', err);
@@ -53,10 +58,14 @@ export const ContentProvider = ({ children }) => {
         throw new Error('Authentication token not found');
       }
       
+      console.log('Adding content:', newContent);
+      
       // Save to backend first
       const response = await axios.post(`${API_URL}/content`, newContent, {
         headers: { Authorization: `Bearer ${currentToken}` }
       });
+      
+      console.log('Content added response:', response.data);
       
       // Update local state with the response from server (includes ID and timestamp)
       setContent(prev => [response.data, ...prev]);

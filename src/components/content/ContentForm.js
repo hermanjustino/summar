@@ -2,124 +2,213 @@ import React, { useState } from 'react';
 import { useContent } from '../../context/ContentContext';
 
 const ContentForm = () => {
-  const { addContent, isLoading } = useContent();
-  const [url, setUrl] = useState('');
-  const [file, setFile] = useState(null);
-  const [notes, setNotes] = useState('');
-  const [tags, setTags] = useState([]);
+  const { addContent, isLoading, error } = useContent();
+  const [formData, setFormData] = useState({
+    title: '',
+    originalContent: '',
+    contentType: 'other',
+    url: '',
+    tags: [],
+    isPublic: false
+  });
   const [tagInput, setTagInput] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const handleUrlChange = (e) => setUrl(e.target.value);
-  const handleFileChange = (e) => setFile(e.target.files[0]);
-  const handleNotesChange = (e) => setNotes(e.target.value);
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value
+    });
+  };
 
   const addTag = () => {
-    if (tagInput && !tags.includes(tagInput)) {
-      setTags([...tags, tagInput]);
+    if (tagInput && !formData.tags.includes(tagInput)) {
+      setFormData({
+        ...formData,
+        tags: [...formData.tags, tagInput]
+      });
       setTagInput('');
     }
   };
 
   const removeTag = (tagToRemove) => {
-    setTags(tags.filter(tag => tag !== tagToRemove));
+    setFormData({
+      ...formData,
+      tags: formData.tags.filter(tag => tag !== tagToRemove)
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const newContent = {
-      title: url ? new URL(url).hostname : file?.name || 'Untitled Content',
-      description: notes,
-      tags,
-      url: url || null,
-      file: file || null,
-    };
-    
-    addContent(newContent);
-    setUrl('');
-    setFile(null);
-    setNotes('');
-    setTags([]);
+    setSuccessMessage('');
+
+    // Validate required fields
+    if (!formData.title || !formData.originalContent) {
+      return; // Form validation will show errors
+    }
+
+    try {
+      await addContent(formData);
+      
+      // Reset form on success
+      setFormData({
+        title: '',
+        originalContent: '',
+        contentType: 'other',
+        url: '',
+        tags: [],
+        isPublic: false
+      });
+      
+      setSuccessMessage('Content added successfully!');
+    } catch (err) {
+      // Error is handled by ContentContext
+      console.error("Content form error:", err);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6">
-      <div className="mb-6">
-        <label className="block text-gray-700 mb-2">URL or Spotify Link</label>
-        <input 
-          type="text" 
-          value={url}
-          onChange={handleUrlChange}
-          className="w-full px-4 py-2 border rounded-lg" 
-          placeholder="Paste URL here..."
-        />
-      </div>
+    <div className="bg-white rounded-lg shadow p-6">
+      <h2 className="text-xl font-semibold mb-4">Add New Content</h2>
       
-      <div className="mb-6">
-        <label className="block text-gray-700 mb-2">Or Upload Media</label>
-        <input 
-          type="file" 
-          onChange={handleFileChange}
-          className="block w-full text-gray-700"
-        />
-      </div>
+      {successMessage && (
+        <div className="mb-4 p-3 bg-green-100 text-green-800 rounded-lg">
+          {successMessage}
+        </div>
+      )}
       
-      <div className="mb-6">
-        <label className="block text-gray-700 mb-2">Your Notes or Thoughts</label>
-        <textarea 
-          value={notes}
-          onChange={handleNotesChange}
-          className="w-full px-4 py-2 border rounded-lg" 
-          rows="3"
-          placeholder="What did you think about this content?"
-        ></textarea>
-      </div>
+      {error && (
+        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+          {error}
+        </div>
+      )}
       
-      <div className="mb-6">
-        <label className="block text-gray-700 mb-2">Tags</label>
-        <div className="flex items-center">
-          <input 
-            type="text" 
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            className="flex-1 px-4 py-2 border rounded-lg" 
-            placeholder="Add a tag..."
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Title *</label>
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-lg"
+            placeholder="Title for your content"
+            required
           />
-          <button 
-            type="button"
-            onClick={addTag}
-            className="ml-2 bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300"
-          >
-            Add
-          </button>
         </div>
         
-        <div className="mt-2 flex flex-wrap gap-2">
-          {tags.map((tag, index) => (
-            <div key={index} className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded flex items-center">
-              <span>{tag}</span>
-              <button 
-                type="button"
-                onClick={() => removeTag(tag)}
-                className="ml-1 text-indigo-600 hover:text-indigo-800"
-              >
-                &times;
-              </button>
-            </div>
-          ))}
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Content Type</label>
+          <select
+            name="contentType"
+            value={formData.contentType}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-lg"
+          >
+            <option value="other">Other</option>
+            <option value="summary">Summary</option>
+            <option value="social">Social Media</option>
+            <option value="blog">Blog Post</option>
+            <option value="email">Email</option>
+          </select>
         </div>
-      </div>
-      
-      <button 
-        type="submit"
-        disabled={isLoading || (!url && !file)}
-        className={`${
-          isLoading || (!url && !file) ? 'bg-gray-400' : 'bg-indigo-600 hover:bg-indigo-700'
-        } text-white px-6 py-2 rounded-lg`}
-      >
-        {isLoading ? 'Importing...' : 'Import Content'}
-      </button>
-    </form>
+        
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Content *</label>
+          <textarea
+            name="originalContent"
+            value={formData.originalContent}
+            onChange={handleChange}
+            rows="4"
+            className="w-full px-3 py-2 border rounded-lg"
+            placeholder="Enter or paste your content here"
+            required
+          ></textarea>
+        </div>
+        
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">URL</label>
+          <input
+            type="url"
+            name="url"
+            value={formData.url}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-lg"
+            placeholder="https://example.com/article"
+          />
+        </div>
+        
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Tags</label>
+          <div className="flex">
+            <input
+              type="text"
+              value={tagInput}
+              onChange={e => setTagInput(e.target.value)}
+              className="flex-1 px-3 py-2 border rounded-l-lg"
+              placeholder="Add a tag"
+            />
+            <button
+              type="button"
+              onClick={addTag}
+              className="bg-blue-500 text-white px-4 py-2 rounded-r-lg"
+            >
+              Add
+            </button>
+          </div>
+          
+          {formData.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-2">
+              {formData.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="bg-gray-100 px-2 py-1 rounded flex items-center"
+                >
+                  {tag}
+                  <button
+                    type="button"
+                    onClick={() => removeTag(tag)}
+                    className="ml-1 text-gray-500 hover:text-red-500"
+                  >
+                    &times;
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+        
+        <div className="mb-6">
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              name="isPublic"
+              checked={formData.isPublic}
+              onChange={handleChange}
+              className="mr-2"
+            />
+            <span className="text-gray-700">Make this content public</span>
+          </label>
+        </div>
+        
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg disabled:bg-blue-400"
+        >
+          {isLoading ? (
+            <span className="flex items-center justify-center">
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Saving...
+            </span>
+          ) : 'Add Content'}
+        </button>
+      </form>
+    </div>
   );
 };
 

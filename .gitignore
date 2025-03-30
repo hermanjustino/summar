@@ -29,6 +29,4 @@ chat_gpt.md
 .env
 /server/.env
 
-/server/node_modules
-
-chat_gpt.md
+console_log.txt

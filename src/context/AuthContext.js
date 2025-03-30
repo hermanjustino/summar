@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import * as authService from '../services/auth';
+import { getToken } from '../services/storage';
 
 // Initial state
 const initialState = {
   user: null,
+  token: getToken(), // Initialize token from storage
   isAuthenticated: false,
   isLoading: true,
   error: null
@@ -36,7 +38,8 @@ const authReducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload,
+        user: action.payload.user,
+        token: action.payload.token, // Store token in state
         isLoading: false,
         error: null
       };
@@ -46,6 +49,7 @@ const authReducer = (state, action) => {
         ...state,
         isAuthenticated: false,
         user: null,
+        token: null, // Clear token on failure
         isLoading: false,
         error: action.payload
       };
@@ -54,6 +58,7 @@ const authReducer = (state, action) => {
         ...state,
         isAuthenticated: false,
         user: null,
+        token: null, // Clear token on logout
         error: null
       };
     case AUTH_ACTIONS.INIT_AUTH:
@@ -61,6 +66,7 @@ const authReducer = (state, action) => {
         ...state,
         isAuthenticated: action.payload.isAuthenticated,
         user: action.payload.user,
+        token: action.payload.token, // Set token from initialization
         isLoading: false
       };
     default:
@@ -84,10 +90,11 @@ export const AuthProvider = ({ children }) => {
     const initAuth = () => {
       const user = authService.getCurrentUser();
       const isAuthenticated = authService.isAuthenticated();
+      const token = getToken(); // Get token from storage
 
       dispatch({
         type: AUTH_ACTIONS.INIT_AUTH,
-        payload: { user, isAuthenticated }
+        payload: { user, isAuthenticated, token }
       });
     };
 

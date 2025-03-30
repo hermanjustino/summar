@@ -6,9 +6,6 @@ require('dotenv').config();
 // Import database connection
 const connectDB = require('./config/database');
 
-// Import database connection
-const connectDB = require('./config/database');
-
 const app = express();
 
 // Middleware
@@ -28,9 +25,6 @@ app.use((req, res, next) => {
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', database: 'connected' });
 });
-
-// Auth routes
-app.use('/api/auth', require('./routes/auth'));
 
 // Register route handlers
 app.use('/api/auth', require('./routes/auth'));

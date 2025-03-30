@@ -1,23 +1,46 @@
 import React from 'react';
+import ContentGenerator from '../components/content/ContentGenerator';
+import ContentList from '../components/content/ContentList';
+import { useContent } from '../context/ContentContext';
 
 const Generated = () => {
-  // This would typically come from a context or API
-  const generatedPosts = [];
-
+  const { content, isLoading, error } = useContent();
+  
+  // Filter to only show AI-generated content
+  const generatedContent = content.filter(item => 
+    item.type === 'general' || item.type === 'summary' || 
+    item.type === 'social' || item.type === 'blog'
+  );
+  
   return (
-    <div className="max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Generated Posts</h1>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold mb-6 dark:text-white">AI Content Generator</h1>
       
-      {generatedPosts.length === 0 ? (
-        <div className="bg-white rounded-lg shadow p-6 text-center">
-          <p className="text-gray-500">You don't have any generated posts yet.</p>
-          <p className="mt-2">Go to your content library to generate posts.</p>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-1">
+          <ContentGenerator />
         </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Generated posts will be rendered here */}
+        
+        <div className="lg:col-span-2">
+          <h2 className="text-xl font-semibold mb-4 dark:text-white">Generated Content</h2>
+          
+          {isLoading ? (
+            <div className="flex justify-center py-8">
+              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
+            </div>
+          ) : error ? (
+            <div className="bg-red-100 text-red-700 p-4 rounded-lg">
+              {error}
+            </div>
+          ) : generatedContent.length === 0 ? (
+            <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg text-center">
+              <p className="dark:text-white">No generated content yet. Try creating some!</p>
+            </div>
+          ) : (
+            <ContentList content={generatedContent} />
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

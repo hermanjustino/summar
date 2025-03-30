@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 /**
  * @route   POST api/generate
@@ -9,19 +10,47 @@ const auth = require('../middleware/auth');
  */
 router.post('/', auth, async (req, res) => {
   try {
-    // Will integrate with Gemini 1.5 later
+    const { prompt, contentType } = req.body;
+    
+    if (!prompt) {
+      return res.status(400).json({ message: 'Prompt is required' });
+    }
+    
+    // Initialize the Gemini API
+    const API_KEY = process.env.GEMINI_API_KEY;
+    if (!API_KEY) {
+      return res.status(500).json({ message: 'API key not configured' });
+    }
+    
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
+    
+    // Prepare the generation prompt based on content type
+    let generationPrompt;
+    if (contentType === 'summary') {
+      generationPrompt = `Please summarize the following text in a concise but comprehensive manner:\n\n${prompt}`;
+    } else if (contentType === 'social') {
+      generationPrompt = `Generate engaging social media posts based on this content:\n\n${prompt}\n\nProvide one post each for Twitter, LinkedIn, and Instagram.`;
+    } else {
+      generationPrompt = prompt;
+    }
+    
+    // Generate content
+    console.log(`Generating ${contentType} content with prompt: ${prompt.substring(0, 50)}...`);
+    const result = await model.generateContent(generationPrompt);
+    const generatedText = result.response.text();
+    
     res.json({
-      message: 'Post generation placeholder',
-      userId: req.userId,
-      platforms: {
-        linkedin: 'Generated LinkedIn post content...',
-        twitter: 'Generated Twitter post content...',
-        instagram: 'Generated Instagram post caption...'
-      }
+      message: 'Content generated successfully',
+      content: generatedText,
+      contentType
     });
   } catch (error) {
     console.error('Content generation error:', error);
-    res.status(500).json({ message: 'Server error during content generation' });
+    res.status(500).json({ 
+      message: 'Server error during content generation',
+      error: error.message
+    });
   }
 });
 

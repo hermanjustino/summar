@@ -12,7 +12,7 @@ const ContentSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['article', 'podcast', 'video', 'book', 'other'],
+    enum: ['article', 'podcast', 'video', 'book', 'summary', 'social', 'blog', 'general', 'other'],
     default: 'article'
   },
   url: {
@@ -24,6 +24,11 @@ const ContentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  // Add fields specific to AI-generated content
+  originalPrompt: {
+    type: String,
+    trim: true
   },
   createdAt: {
     type: Date,

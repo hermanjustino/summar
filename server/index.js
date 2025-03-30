@@ -31,6 +31,15 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/content', require('./routes/content'));
 app.use('/api/generate', require('./routes/generate'));
 
+// Error handling middleware - add this before the PORT definition
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  res.status(err.status || 500).json({
+    message: err.message || 'An unexpected error occurred',
+    stack: process.env.NODE_ENV === 'production' ? undefined : err.stack
+  });
+});
+
 const PORT = process.env.PORT || 5001;
 
 // Try to start server with better error handling

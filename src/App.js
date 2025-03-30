@@ -6,6 +6,7 @@ import './App.css';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ContentProvider } from './context/ContentContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { AIProvider } from './context/AIContext';
 
 // Import page components 
 import Dashboard from './pages/Dashboard';
@@ -88,7 +89,9 @@ function App() {
       <ThemeProvider>
         <AuthProvider>
           <ContentProvider>
-            <AppContent />
+            <AIProvider>
+              <AppContent />
+            </AIProvider>
           </ContentProvider>
         </AuthProvider>
       </ThemeProvider>

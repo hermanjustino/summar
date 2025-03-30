@@ -15,32 +15,21 @@ app.use(bodyParser.json());
 // Connect to database
 connectDB();
 
+// Debug middleware to log all requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
+
 // Routes
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', database: 'connected' });
 });
 
-// Auth routes
+// Register route handlers
 app.use('/api/auth', require('./routes/auth'));
-
-// Content routes placeholder
-app.get('/api/content', (req, res) => {
-  // Will connect to MongoDB later
-  res.json({ message: 'Content API placeholder' });
-});
-
-// AI generation endpoint placeholder
-app.post('/api/generate', (req, res) => {
-  // Will integrate with Gemini 1.5 later
-  res.json({ 
-    message: 'Post generation placeholder',
-    platforms: {
-      linkedin: 'Generated LinkedIn post content...',
-      twitter: 'Generated Twitter post content...',
-      instagram: 'Generated Instagram post caption...'
-    }
-  });
-});
+app.use('/api/content', require('./routes/content'));
+app.use('/api/generate', require('./routes/generate'));
 
 const PORT = process.env.PORT || 5001;
 

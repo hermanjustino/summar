@@ -14,6 +14,10 @@ import Library from './pages/Library';
 import Generated from './pages/Generated';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
+import About from './pages/About';
+import Landing from './pages/Landing';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 // Import auth components
 import Login from './components/auth/Login';
@@ -48,11 +52,15 @@ function AppContent() {
       <main className="container mx-auto px-4 py-8 flex-grow">
         <Routes>
           {/* Public routes */}
-          <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
-          <Route path="/register" element={!isAuthenticated ? <Register /> : <Navigate to="/" />} />
+          <Route path="/" element={!isAuthenticated ? <Landing /> : <Navigate to="/dashboard" />} />
+          <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/dashboard" />} />
+          <Route path="/register" element={!isAuthenticated ? <Register /> : <Navigate to="/dashboard" />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
           
           {/* Protected routes */}
-          <Route path="/" element={
+          <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>

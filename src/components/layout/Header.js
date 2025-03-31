@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Header = () => {
   const { isAuthenticated, logout, user } = useAuth();
   const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const handleLogout = () => {
     logout();
     navigate('/login');
+    setMobileMenuOpen(false);
+  };
+  
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
   
   return (
@@ -16,7 +22,25 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="text-2xl font-bold text-indigo-600">Summar</Link>
         
-        <nav>
+        {/* Mobile menu button */}
+        <div className="md:hidden">
+          <button 
+            onClick={toggleMobileMenu}
+            className="text-gray-600 hover:text-indigo-600 focus:outline-none"
+            aria-label="Toggle menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
+        
+        {/* Desktop Navigation */}
+        <nav className="hidden md:block">
           <ul className="flex space-x-6 items-center">
             {isAuthenticated ? (
               <>
@@ -63,6 +87,72 @@ const Header = () => {
           </ul>
         </nav>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200">
+          <div className="container mx-auto px-4 py-2">
+            {isAuthenticated ? (
+              <div className="space-y-3">
+                <div className="border-b border-gray-200 pb-3">
+                  <p className="font-medium text-gray-800">{user?.name || 'User'}</p>
+                </div>
+                <Link 
+                  to="/" 
+                  className="block py-2 text-gray-600"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <Link 
+                  to="/library" 
+                  className="block py-2 text-gray-600"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Content Library
+                </Link>
+                <Link 
+                  to="/posts" 
+                  className="block py-2 text-gray-600"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Generated Posts
+                </Link>
+                <Link 
+                  to="/profile" 
+                  className="block py-2 text-gray-600"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left py-2 text-gray-600"
+                >
+                  Log Out
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3 py-2">
+                <Link 
+                  to="/login" 
+                  className="block py-2 text-gray-600"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Log In
+                </Link>
+                <Link 
+                  to="/register" 
+                  className="block py-2 text-indigo-600 font-medium"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 };

@@ -49,6 +49,10 @@ touch src/pages/Library.js
 touch src/pages/Generated.js
 touch src/pages/Profile.js
 touch src/pages/NotFound.js
+touch src/pages/About.js
+touch src/pages/Landing.js
+touch src/pages/Privacy.js
+touch src/pages/Terms.js
 
 # Create additional context files
 touch src/context/AuthContext.js

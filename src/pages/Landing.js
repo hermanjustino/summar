@@ -65,7 +65,7 @@ const Landing = () => {
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Digital Presence?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join thousands of professionals who trust Summar to manage their digital identity.
+            Join the professionals who trust Summar to manage their digital identity.
           </p>
           <Link 
             to="/register" 

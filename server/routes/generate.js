@@ -17,7 +17,7 @@ router.post('/', auth, async (req, res) => {
     }
     
     // Initialize the Gemini API
-    const API_KEY = process.env.GEMINI_API_KEY;
+    const API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
     if (!API_KEY) {
       return res.status(500).json({ message: 'API key not configured' });
     }

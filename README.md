@@ -49,7 +49,7 @@ In today's content-saturated world, sharing meaningful perspectives on the media
 - Node.js (v14 or later)
 - npm or yarn
 - MongoDB (local or Atlas connection)
-- OpenAI API key
+- Gemini API key
 
 ### Installation
 
